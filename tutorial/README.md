@@ -60,9 +60,11 @@
       ```
       
   ## 3. Linear Regression
-  
-  ![equation](http://latex.codecogs.com/gif.latex?X%5Cin%5Cmathcal%7BR%7D%5E%7Bn%5Ctimesd%7D)
-  ![equation](http://latex.codecogs.com/gif.latex?Y%5Cin%5Cmathcal%7BR%7D%5E%7Bn%7D)
+    - Data Matrix `X` with `n` rows (instances) and `d` columns (features).
+    - Depedent Variable `Y` with `n` real values.
+    - Weight parameter `w` and bias parameter `b`.
+    - Loss Function
+![equation](http://latex.codecogs.com/gif.latex?L%3D%7B%7C%7CXw%2Bb-Y%7C%7C%7D%5E2)
       
 #### 
 <!-- 

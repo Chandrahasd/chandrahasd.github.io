@@ -167,9 +167,7 @@
   - Simpler way
     ```python
       # Define the neural network
-      def neural_net(x_dict):
-      # TF Estimator input is a dict, in case of multiple inputs
-      x = x_dict['images']
+      def neural_net(x):
       # Hidden fully connected layer with 256 neurons
       layer_1 = tf.layers.dense(x, n_hidden_1, name="layer_1") #default name="dense"
       # Hidden fully connected layer with 256 neurons

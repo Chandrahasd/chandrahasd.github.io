@@ -101,6 +101,91 @@
        loss = tf.reduce_sum(tf.log(1.0 + tf.exp(-1.0*tf.multiply(scores, Y)))) 
     ```
 
+## 5. Simple Neural Network
+  - Loss function
+    ```python
+    # Store layers weight & bias
+    weights = {                                                                                                                                                                       
+    'h1': tf.Variable(tf.random_normal([n_input, n_hidden_1])),                                                                                                                   
+    'h2': tf.Variable(tf.random_normal([n_hidden_1, n_hidden_2])),                                                                                                                
+    'out': tf.Variable(tf.random_normal([n_hidden_2, n_classes]))                                                                                                                 
+    }                                                                                                                                                                                 
+    biases = {                                                                                                                                                                        
+    'b1': tf.Variable(tf.random_normal([n_hidden_1])),                                                                                                                            
+    'b2': tf.Variable(tf.random_normal([n_hidden_2])),                                                                                                                            
+    'out': tf.Variable(tf.random_normal([n_classes]))                                                                                                                             
+    }                                                                                                                                                                                 
+    # Create model                                                                                                                                                                    
+    def multilayer_perceptron(x):                                                                                                                                                     
+      # Hidden fully connected layer with 256 neurons                                                                                                                               
+      layer_1 = tf.add(tf.matmul(x, weights['h1']), biases['b1'])                                                                                                                   
+      # Hidden fully connected layer with 256 neurons                                                                                                                               
+      layer_2 = tf.add(tf.matmul(layer_1, weights['h2']), biases['b2'])                                                                                                             
+      # Output fully connected layer with a neuron for each class                                                                                                                   
+      out_layer = tf.matmul(layer_2, weights['out']) + biases['out']                                                                                                                
+      return out_layer                                                                                                                                                              
+                                                                                                                                                                                  
+    # Construct model                                                                                                                                                                 
+    logits = multilayer_perceptron(X)                                                                                                                                                 
+                                                                                                                                                                                  
+    # Define loss and optimizer                                                                                                                                                       
+    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(                                                                                                                 
+    logits=logits, labels=Y))                                                                                                                                                     
+
+    ```
+  - Batch Training
+    ```python
+      optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+      train_op = optimizer.minimize(loss_op)
+      # Initializing the variables
+      init = tf.global_variables_initializer()
+
+      with tf.Session() as sess:
+        sess.run(init)
+
+        # Training cycle
+        for epoch in range(training_epochs):
+          avg_cost = 0.
+          total_batch = int(mnist.train.num_examples/batch_size)
+          # Loop over all batches
+          for i in range(total_batch):
+            batch_x, batch_y = mnist.train.next_batch(batch_size)
+            # Run optimization op (backprop) and cost op (to get loss value)
+            _, c = sess.run([train_op, loss_op], feed_dict={X: batch_x,
+                                                            Y: batch_y})
+            # Compute average loss
+            avg_cost += c / total_batch
+        print("Optimization Finished!")
+
+        # Test model
+        pred = tf.nn.softmax(logits)  # Apply softmax to logits
+        correct_prediction = tf.equal(tf.argmax(pred, 1), tf.argmax(Y, 1))
+        # Calculate accuracy
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+        print("Accuracy:", accuracy.eval({X: mnist.test.images, Y: mnist.test.labels}))
+    ```
+  - Simpler way
+    ```python
+      # Define the neural network
+      def neural_net(x_dict):
+      # TF Estimator input is a dict, in case of multiple inputs
+      x = x_dict['images']
+      # Hidden fully connected layer with 256 neurons
+      layer_1 = tf.layers.dense(x, n_hidden_1, name="layer_1") #default name="dense"
+      # Hidden fully connected layer with 256 neurons
+      layer_2 = tf.layers.dense(layer_1, n_hidden_2, name="layer_2") #default name="dense_1"
+      # Output fully connected layer with a neuron for each class
+      out_layer = tf.layers.dense(layer_2, num_classes, name="layer_3") #default name="dense_2"
+      return out_layer
+    ```
+    - How to get parameters ?
+    ```python
+      model.get_variable_names()
+      #['layer_1/bias', 'layer_1/kernel', 'layer_2/bias', 'layer_2/kernel', 'layer_3/bias', 'layer_3/kernel', 'global_step']
+      model.get_variable_value("layer_1/kernel")
+      # prints the corresponding weigth
+    ```
+    - 
 <!-- 
 ![equation](http://latex.codecogs.com/gif.latex?Concentration%3D%5Cfrac%7BTotalTemplate%7D%7BTotalVolume%7D)  
 -->

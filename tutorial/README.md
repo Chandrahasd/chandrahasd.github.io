@@ -185,7 +185,28 @@
       model.get_variable_value("layer_1/kernel")
       # prints the corresponding weigth
     ```
-    - 
+    - Alternate way of training (using Estimator)
+    ```python
+      # Build the Estimator
+      model = tf.estimator.Estimator(model_fn) # model_fn(features, labels, mode) : EstimatorSpec
+
+      # Define the input function for training
+      input_fn = tf.estimator.inputs.numpy_input_fn(
+      x={'images': mnist.train.images}, y=mnist.train.labels,
+      batch_size=batch_size, num_epochs=None, shuffle=True)
+      # Train the Model
+      model.train(input_fn, steps=num_steps)
+
+      # Evaluate the Model
+      # Define the input function for evaluating
+      input_fn = tf.estimator.inputs.numpy_input_fn(
+      x={'images': mnist.test.images}, y=mnist.test.labels,
+      batch_size=batch_size, shuffle=False)
+      # Use the Estimator 'evaluate' method
+      e = model.evaluate(input_fn)
+
+      print("Testing Accuracy:", e['accuracy'])
+    ```
 <!-- 
 ![equation](http://latex.codecogs.com/gif.latex?Concentration%3D%5Cfrac%7BTotalTemplate%7D%7BTotalVolume%7D)  
 -->

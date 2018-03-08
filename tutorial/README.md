@@ -94,6 +94,12 @@
         _, l = sess.run([train,loss], feed_dict={X:data['X'], Y:data['Y']})                                                                                                   
 
     ```
+## 4. Logistic Regression
+  - Loss function
+    ```python
+       scores = tf.sigmoid(tf.reduce_sum(tf.multiply(X,params['W']), axis=1) + params['b'])                                                                                      
+       loss = tf.reduce_sum(tf.log(1.0 + tf.exp(-1.0*tf.multiply(scores, Y)))) 
+    ```
 
 <!-- 
 ![equation](http://latex.codecogs.com/gif.latex?Concentration%3D%5Cfrac%7BTotalTemplate%7D%7BTotalVolume%7D)  

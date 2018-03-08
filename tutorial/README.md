@@ -58,13 +58,12 @@
         print(sess.run(add))  # >> 11.0
       sess.close()
       ```
-      
-  ## 3. Linear Regression
-    - Data Matrix `X` with `n` rows (instances) and `d` columns (features).
-    - Depedent Variable `Y` with `n` real values.
-    - Weight parameter `w` and bias parameter `b`.
-    - Loss Function
-![equation](http://latex.codecogs.com/gif.latex?L%3D%7B%7C%7CXw%2Bb-Y%7C%7C%7D%5E2)
+## 3. Linear Regression
+  - Data Matrix `X` with `n` rows (instances) and `d` columns (features).
+  - Depedent Variable `Y` with `n` real values.
+  - Weight parameter `w` and bias parameter `b`.
+  - Loss Function `L(w,b)`
+![equation](http://latex.codecogs.com/gif.latex?L%28w%2Cb%29%3D%7B%7C%7CXw%2Bb-Y%7C%7C%7D%5E2)
       
 #### 
 <!-- 

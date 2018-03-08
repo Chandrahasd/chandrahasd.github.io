@@ -168,20 +168,20 @@
     ```python
       # Define the neural network
       def neural_net(x):
-      # Hidden fully connected layer with 256 neurons
-      layer_1 = tf.layers.dense(x, n_hidden_1, name="layer_1") #default name="dense"
-      # Hidden fully connected layer with 256 neurons
-      layer_2 = tf.layers.dense(layer_1, n_hidden_2, name="layer_2") #default name="dense_1"
-      # Output fully connected layer with a neuron for each class
-      out_layer = tf.layers.dense(layer_2, num_classes, name="layer_3") #default name="dense_2"
-      return out_layer
+        # Hidden fully connected layer with 256 neurons
+        layer_1 = tf.layers.dense(x, n_hidden_1, name="layer_1") #default name="dense"
+        # Hidden fully connected layer with 256 neurons
+        layer_2 = tf.layers.dense(layer_1, n_hidden_2, name="layer_2") #default name="dense_1"
+        # Output fully connected layer with a neuron for each class
+        out_layer = tf.layers.dense(layer_2, num_classes, name="layer_3") #default name="dense_2"
+        return out_layer
     ```
     - How to get parameters ?
     ```python
       model.get_variable_names()
       #['layer_1/bias', 'layer_1/kernel', 'layer_2/bias', 'layer_2/kernel', 'layer_3/bias', 'layer_3/kernel', 'global_step']
       model.get_variable_value("layer_1/kernel")
-      # prints the corresponding weigth
+      # prints the corresponding weights
     ```
     - Alternate way of training (using Estimator)
     ```python
@@ -205,6 +205,42 @@
 
       print("Testing Accuracy:", e['accuracy'])
     ```
+    - Estimator specifications
+    ```python
+      # Define the model function (following TF Estimator Template)
+      def model_fn(features, labels, mode):
+        # Build the neural network
+        logits = neural_net(features)
+
+        # Predictions
+        pred_classes = tf.argmax(logits, axis=1)
+         pred_probas = tf.nn.softmax(logits)
+
+        # If prediction mode, early return
+        if mode == tf.estimator.ModeKeys.PREDICT:
+          return tf.estimator.EstimatorSpec(mode, predictions=pred_classes)
+
+        # Define loss and optimizer
+        loss_op = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(
+          logits=logits, labels=tf.cast(labels, dtype=tf.int32)))
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+        train_op = optimizer.minimize(loss_op,
+          global_step=tf.train.get_global_step())
+
+        # Evaluate the accuracy of the model
+        acc_op = tf.metrics.accuracy(labels=labels, predictions=pred_classes)
+
+        # TF Estimators requires to return a EstimatorSpec, that specify
+        # the different ops for training, evaluating, ...
+        estim_specs = tf.estimator.EstimatorSpec(
+          mode=mode,
+          predictions=pred_classes,
+          loss=loss_op,
+          train_op=train_op,
+          eval_metric_ops={'accuracy': acc_op})
+
+        return estim_specs
+      ```
 <!-- 
 ![equation](http://latex.codecogs.com/gif.latex?Concentration%3D%5Cfrac%7BTotalTemplate%7D%7BTotalVolume%7D)  
 -->

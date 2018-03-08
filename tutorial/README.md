@@ -64,8 +64,37 @@
   - Weight parameter `w` and bias parameter `b`.
   - Loss Function
           ![equation](http://latex.codecogs.com/gif.latex?L%28w%2Cb%29%3D%5Cfrac%7B1%7D%7B2n%7D%7B%7C%7CXw%2Bb-Y%7C%7C%7D%5E2)
-      
-#### 
+  - Defining loss function
+    ```python          
+    # Model Parameters
+    W = tf.get_variable("W", shape=(d), initializer=tf.random_normal_initializer)                                                                                                 
+    b = tf.get_variable("b", shape=(1), initializer=tf.random_normal_initializer)                                                                                                 
+                                  
+    # Data Placeholders input to the Graph
+    X = tf.placeholder(tf.float32)                                                                                   
+    Y = tf.placeholder(tf.float32)                                                                                                                                                
+                       
+    # Loss Function
+    linear_model = tf.reduce_sum(tf.multiply(X,W), axis=1) + b                                                                                                                    
+    sqaured_deltas = tf.square(linear_model - Y)                                                                                                                                  
+    loss = (1.0/(2*n))*tf.reduce_sum(sqaured_deltas)                                                                                                                                
+    ```
+  - Training
+    ```python
+    # Define optimizer
+    optimizer = tf.train.AdamOptimizer(0.003) #tf.train.GradientDescentOptimizer(0.003)                                                                                                                       
+    train = optimizer.minimize(loss)
+    
+    with tf.Session(config=config) as sess:                                                                                                                                       
+      # Initialization
+      init = tf.global_variables_initializer()                                                                                                                                  
+      sess.run(init)  
+    # Train Iteratively
+      for i in range(100):                                                                                                                                                      
+        _, l = sess.run([train,loss], feed_dict={X:data['X'], Y:data['Y']})                                                                                                   
+
+    ```
+
 <!-- 
 ![equation](http://latex.codecogs.com/gif.latex?Concentration%3D%5Cfrac%7BTotalTemplate%7D%7BTotalVolume%7D)  
 -->

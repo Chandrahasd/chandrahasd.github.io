@@ -6,9 +6,13 @@
   3. Linear Regression
   4. Logistic Regression
   5. Simple Neural Network
+  6. Other Examples
+  <!--
   6. Word2Vec
   7. Recurrent Neural Network
   8. Convolutional Neural Network
+  -->
+  7. References and Useful Links
 
 ## 1. Computation Graphs
 
@@ -241,6 +245,16 @@
 
         return estim_specs
       ```
+## 6. Other Examples
+  - [Word2Vec](https://www.tensorflow.org/tutorials/word2vec)
+  - [Convolutional Neural Network](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/convolutional_network.ipynb)
+  - [Recurrent Neural Network](https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb)
+  
+## 7. References and Useful Links
+  - [TensorFlow Documentation](https://www.tensorflow.org/tutorials/)
+  - [Examples](https://github.com/aymericdamien/TensorFlow-Examples)
+  - [Tutorial by Chip Huyen](http://web.stanford.edu/class/cs224n/lectures/lecture6.pdf)
+  - [Tutorial by Venelin Valkov](https://medium.com/@curiousily/tensorflow-for-hackers-part-i-basics-2c46bc99c930)
 <!-- 
 ![equation](http://latex.codecogs.com/gif.latex?Concentration%3D%5Cfrac%7BTotalTemplate%7D%7BTotalVolume%7D)  
 -->

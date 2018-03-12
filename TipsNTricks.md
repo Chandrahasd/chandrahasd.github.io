@@ -1,8 +1,8 @@
-##Some progamming tips and tricks which I happen to know :)
-* ####Checking membership frequntly:
+## Some progamming tips and tricks which I happen to know :)
+* #### Checking membership frequntly:
   
   use sets instead of lists. It does speed up a lot. Sets are made for this. Oh come on, just use sets.
-* ####Theano with GPU:
+* #### Theano with GPU:
   
   when I started using Theano with GPU, I was disappointed as I was not getting the expected speed up.
 But I soon realized the mistakes I have been making. I have listed some of them here.

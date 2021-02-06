@@ -75,3 +75,22 @@ a#pdf:hover { background: #222; }
 .yui-gf div.first{width:12.3%;}
 
 
+/* .span {
+    color: #333;
+    text-decoration: none";
+}
+
+span:hover {
+    border-bottom-style: dotted;
+    color: #333; 
+} */
+
+.fa-icon {
+    color: #666; 
+    text-decoration: none;
+}
+
+.fa-icon:hover {
+    color: #333;
+    text-decoration: none;
+}

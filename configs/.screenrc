@@ -1,0 +1,49 @@
+# the following two lines give a two-line status, with the current window highlighted
+hardstatus alwayslastline "%{-b ..}%-w%{+b ..}[[%n%f*%t]]%{-}%+w"
+#hardstatus string '%{= kG}[%{G}%H%? %1`%?%{g}][%= %{= kw}%-w%{+b yk} %n*%t%?(%u)%? %{-}%+w %=%{g}][%{B}%m/%d %{W}%C%A%{g}]'
+
+# huge scrollback buffer
+defscrollback 5000
+
+# no welcome message
+startup_message off
+
+# 256 colors
+#attrcolor b ".I"
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+#defbce on
+
+# mouse tracking allows to switch region focus by clicking
+#mousetrack on
+
+# default windows
+screen -t gpustat       #0 watch --color -n1.0 gpustat --color; exec bash
+screen -t htop          #1 htop; exec bash
+screen -t vim           #2 lama
+screen -t test_run      #3 lama
+screen -t gridsearch    #4 lama
+screen -t gridsearch    #5 lama
+screen -t gridsearch    #6 lama
+screen -t ipython       #7 
+select 0
+stuff "gpustat^M"
+select 1
+stuff "htop^M"
+select 2
+stuff "pwd^M"
+select 3
+stuff "pwd^M"
+select 4
+stuff "pwd^M"
+select 5
+stuff "pwd^M"
+select 6
+stuff "pwd^M"
+select 7
+stuff "pwd^M"
+stuff "python -m IPython^M"
+select 0
+#bind c screen 1 # window numbering starts at 1 not 0
+#bind 0 select 10
+
+
